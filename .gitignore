@@ -1,0 +1,14 @@
+node_modules/
+outputs/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+frames/
+__pycache__/
+node_modules
+gameplay.mp4

@@ -1,0 +1,116 @@
+{
+ "assets": {
+  "bg_far": {
+   "file": "bg_far.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/text-to-image",
+   "task": "tk-hiapi-01M47JJF1BVT4PTYP1T7M69TF3",
+   "cost": 0.05,
+   "seconds": 51
+  },
+  "ui_icons": {
+   "file": "ui_icons.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/text-to-image",
+   "task": "tk-hiapi-01M47JJF1CB1BB3N9C45M58JRA",
+   "cost": 0.05,
+   "seconds": 64
+  },
+  "key_art": {
+   "file": "key_art.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/text-to-image",
+   "task": "tk-hiapi-01M47JJF1DFG4APC8HCGES2PSJ",
+   "cost": 0.05,
+   "seconds": 64
+  },
+  "oil": {
+   "file": "oil.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/text-to-image",
+   "task": "tk-hiapi-01M47JJF1CB1BB3N9C46C4737K",
+   "cost": 0.05,
+   "seconds": 71
+  },
+  "title": {
+   "file": "title.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/text-to-image",
+   "task": "tk-hiapi-01M47JM0NJPA26QBJ8QMSQ928R",
+   "cost": 0.05,
+   "seconds": 43
+  },
+  "hero": {
+   "file": "hero.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/image-to-image",
+   "task": "tk-hiapi-01M47JMDC05VFZF8KYC8AYNJAE",
+   "cost": 0.05,
+   "seconds": 57
+  },
+  "bgm_level": {
+   "file": "bgm_level.mp3",
+   "type": "music",
+   "model": "minimax-music-2.6",
+   "task": "tk-hiapi-01M47JMD2XJJY6AFF0MCAACTNW",
+   "cost": 0.21,
+   "seconds": 70
+  },
+  "crab": {
+   "file": "crab.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/image-to-image",
+   "task": "tk-hiapi-01M47JMM6DG15Z5B5PNR09SPJD",
+   "cost": 0.05,
+   "seconds": 69
+  },
+  "tiles": {
+   "file": "tiles.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/image-to-image",
+   "task": "tk-hiapi-01M47JNB2J3D8F9FF9DMN8WYFV",
+   "cost": 0.05,
+   "seconds": 56
+  },
+  "voice_intro": {
+   "file": "voice_intro.mp3",
+   "type": "voice",
+   "model": "qwen-audio-3.0-tts-plus",
+   "task": "tk-hiapi-01M47JQ1XWTCGW7J0C9Q2PBDFF",
+   "cost": 0.00184,
+   "seconds": 15
+  },
+  "bg_near": {
+   "file": "bg_near.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/image-to-image",
+   "task": "tk-hiapi-01M47JPH0TSC8Y9VD1PZTX95NG",
+   "cost": 0.05,
+   "seconds": 50
+  },
+  "hero_jump": {
+   "file": "hero_jump.png",
+   "type": "image",
+   "model": "gpt-image-2.5-sunburst/image-to-image",
+   "task": "tk-hiapi-01M47JP4PKF2XFEZ2T5DJ0XGSN",
+   "cost": 0.05,
+   "seconds": 63
+  },
+  "bgm_title": {
+   "file": "bgm_title.mp3",
+   "type": "music",
+   "model": "minimax-music-2.6",
+   "task": "tk-hiapi-01M47JPQQ898E8RMM9VWNCSZGB",
+   "cost": 0.21,
+   "seconds": 153
+  },
+  "trailer": {
+   "file": "trailer.mp4",
+   "type": "video",
+   "model": "seedance-2.0-fast",
+   "task": "tk-hiapi-01M47JQH0PB0HAS29CQC95943Q",
+   "cost": 1.4176,
+   "seconds": 195
+  }
+ }
+}

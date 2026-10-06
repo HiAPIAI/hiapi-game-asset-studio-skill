@@ -1,0 +1,14 @@
+{
+  "name": "hiapi-game-asset-studio-skill",
+  "version": "0.1.0",
+  "description": "One game idea → a consistent asset pack (sprites, tiles, icons, backgrounds, music, voice, trailer) through one HiAPI key, plus a playable prototype",
+  "type": "module",
+  "private": true,
+  "homepage": "https://github.com/HiAPIAI/hiapi-game-asset-studio-skill#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/HiAPIAI/hiapi-game-asset-studio-skill.git" },
+  "bin": { "hiapi-game-asset-studio-skill": "./scripts/install.mjs" },
+  "scripts": { "test": "node --test tests/*.test.mjs", "check": "node --check scripts/install.mjs && node --check scripts/hiapi.mjs && node --check scripts/run-plan.mjs && node --check scripts/gallery.mjs && npm test" },
+  "keywords": ["hiapi", "game-assets", "sprites", "pixel-art", "tileset", "game-music", "gpt-image-2.5", "seedance", "agent-skill", "claude-code", "codex"],
+  "license": "MIT",
+  "engines": { "node": ">=18" }
+}
