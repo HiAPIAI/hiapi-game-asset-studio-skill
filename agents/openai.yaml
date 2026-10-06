@@ -1,0 +1,4 @@
+interface:
+  display_name: "HiAPI 游戏素材工坊"
+  short_description: "一句游戏创意，用一个 HiAPI Key 生成风格统一的角色、地块、图标、背景、音乐、配音和预告片"
+  default_prompt: "Use $hiapi-game-assets to make a consistent asset pack and a playable prototype for this game idea."

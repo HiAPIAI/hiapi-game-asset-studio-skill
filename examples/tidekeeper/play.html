@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tidekeeper — playable demo</title>
+<style>html,body{margin:0;height:100%;background:#0b1020;display:flex;align-items:center;justify-content:center}
+canvas{width:min(100vw,177.78vh);height:auto;image-rendering:pixelated;touch-action:none}</style></head>
+<body><canvas id="c" width="960" height="540"></canvas>
+<script>
+// Tidekeeper: every image and sound here came out of plan.json through HiAPI (assets/). ← → / A D move, space / ↑ / tap jump.
+// Collect the lantern oil, avoid the crabs, reach the lighthouse. ?demo plays itself (used to record the README clip).
+const A = 'assets/', c = document.getElementById('c'), x = c.getContext('2d'); x.imageSmoothingEnabled = false;
+const img = n => Object.assign(new Image(), { src: A + n });
+const I = { far: img('bg_far.png'), near: img('bg_near.png'), hero: img('hero.png'), jump: img('hero_jump.png'), crab: img('crab.png'), oil: img('oil.png'), title: img('title_cut/r0c0.png'),
+  top: img('tiles/r0c0.png'), moss: img('tiles/r0c4.png'), fill: img('tiles/r1c0.png'), pier: img('tiles/r2c0.png'), barrel: img('tiles/r2c6.png'), buoy: img('tiles/r2c7.png'),
+  heart: img('ui_icons/r0c0.png'), oilIcon: img('ui_icons/r0c1.png') };
+const bgm = Object.assign(new Audio(A + 'bgm_level.mp3'), { loop: true, volume: .5 }), voice = new Audio(A + 'voice_intro.mp3');
+const DEMO = location.search.includes('demo'), T = 48, G = 1500, WORLD = 3600, GROUND = 540 - T * 2;
+// level: ground with gaps, piers over the gaps, crabs, oil
+const gaps = [[700, 860], [1500, 1700], [2400, 2560]], piers = [[660, 900, GROUND - 90], [1460, 1740, GROUND - 120], [2360, 2600, GROUND - 90], [1950, 2150, GROUND - 160]];
+const oils = [[780, GROUND - 160], [1100, GROUND - 60], [1600, GROUND - 190], [2050, GROUND - 230], [2480, GROUND - 160], [3000, GROUND - 60]].map(([px, py]) => ({ x: px, y: py, got: false }));
+const crabs = [[1150, 1000, 1350], [1900, 1780, 2300], [2900, 2700, 3150]].map(([px, a, b]) => ({ x: px, a, b, d: -1 }));
+const P = { x: 120, y: GROUND - 80, vx: 0, vy: 0, w: 46, h: 70, ground: false, face: 1, hurt: 0 };
+let state = DEMO ? 'play' : 'title', hearts = 3, got = 0, t = 0, cam = 0, keys = {}, won = 0;
+const solidAt = (px, py) => {
+  if (py >= GROUND && !gaps.some(([a, b]) => px > a && px < b)) return GROUND;
+  for (const [a, b, h] of piers) if (px > a && px < b && py >= h && py <= h + 20) return h;
+  return null;
+};
+function start() { if (state === 'title') { state = 'play'; voice.play().catch(() => {}); bgm.play().catch(() => {}); } }
+addEventListener('keydown', e => { keys[e.key] = true; start(); });
+addEventListener('keyup', e => keys[e.key] = false);
+c.addEventListener('pointerdown', () => { start(); keys.tap = true; setTimeout(() => keys.tap = false, 120); });
+function update(dt) {
+  t += dt; if (state !== 'play') return;
+  let ax = (keys.ArrowRight || keys.d ? 1 : 0) - (keys.ArrowLeft || keys.a ? 1 : 0), jump = keys[' '] || keys.ArrowUp || keys.w || keys.tap;
+  if (DEMO) {   // autopilot: run right, jump before gaps, crabs and piers
+    ax = 1; const ahead = P.x + 90;
+    jump = gaps.some(([a]) => ahead > a - 40 && ahead < a + 10) || crabs.some(k => k.x - P.x > 30 && k.x - P.x < 120) || oils.some(o => !o.got && Math.abs(o.x - P.x - 60) < 30 && o.y < GROUND - 120);
+  }
+  if (P.x > WORLD - 260) { ax = 0; won += dt; }
+  P.vx += (ax * 380 - P.vx) * Math.min(1, dt * 10); if (ax) P.face = ax;
+  if (jump && P.ground) { P.vy = -640; P.ground = false; }
+  P.vy += G * dt; P.x = Math.max(20, Math.min(WORLD - 40, P.x + P.vx * dt));
+  const ny = P.y + P.vy * dt, s = P.vy >= 0 ? solidAt(P.x, ny) : null;
+  if (s !== null && P.y <= s + 2) { P.y = s; P.vy = 0; P.ground = true; } else { P.y = ny; P.ground = false; }
+  if (P.y > 600) { hearts--; P.x = Math.max(120, P.x - 260); P.y = GROUND - 200; P.vy = 0; P.hurt = 1; }
+  for (const o of oils) if (!o.got && Math.abs(o.x - P.x) < 40 && Math.abs(o.y - (P.y - 35)) < 50) { o.got = true; got++; }
+  for (const k of crabs) { k.x += k.d * 70 * dt; if (k.x < k.a || k.x > k.b) k.d *= -1;
+    if (P.hurt <= 0 && Math.abs(k.x - P.x) < 46 && Math.abs(P.y - GROUND) < 30) { if (P.vy > 0) { P.vy = -480; } else { hearts--; P.hurt = 1.2; P.vx = -300 * P.face; } } }
+  P.hurt -= dt; if (hearts <= 0) { hearts = 3; P.x = 120; }
+  cam += (Math.max(0, Math.min(WORLD - 960, P.x - 360)) - cam) * Math.min(1, dt * 6);
+}
+function draw() {
+  x.fillStyle = '#0b1020'; x.fillRect(0, 0, 960, 540);
+  const par = (im, f, y) => { const w = 960 * 1.1, o = -(cam * f) % w; for (let i = -1; i < 3; i++) x.drawImage(im, o + i * w, y, w, w * 9 / 16); };
+  par(I.far, .1, -40); par(I.near, .35, 0);
+  x.save(); x.translate(-Math.round(cam), 0);
+  for (let gx = 0; gx < WORLD; gx += T) if (!gaps.some(([a, b]) => gx + T / 2 > a && gx + T / 2 < b)) { x.drawImage((gx / T) % 5 ? I.top : I.moss, gx, GROUND, T, T); x.drawImage(I.fill, gx, GROUND + T, T, T); }
+  for (const [a, b, h] of piers) for (let px = a; px < b; px += T) x.drawImage(I.pier, px, h, T, T * 1.2);
+  x.drawImage(I.barrel, 400, GROUND - 56, 44, 56); x.drawImage(I.buoy, 2230, GROUND - 60, 40, 60);
+  for (const o of oils) if (!o.got) x.drawImage(I.oil, o.x - 22, o.y - 26 + Math.sin(t * 4 + o.x) * 5, 44, 44);
+  for (const k of crabs) { x.save(); x.translate(k.x, GROUND - 52); if (k.d > 0) x.scale(-1, 1); x.drawImage(I.crab, -36, Math.abs(Math.sin(t * 9 + k.x)) * -4, 72, 72); x.restore(); }
+  if (!(P.hurt > 0 && Math.floor(t * 12) % 2)) { x.save(); x.translate(P.x, P.y); if (P.face < 0) x.scale(-1, 1); x.drawImage(P.ground ? I.hero : I.jump, -46, -88 + (P.ground ? Math.abs(Math.sin(t * 12)) * -3 * Math.min(1, Math.abs(P.vx) / 200) : 0), 92, 92); x.restore(); }
+  x.restore();
+  for (let i = 0; i < hearts; i++) x.drawImage(I.heart, 20 + i * 52, 18, 44, 44);
+  x.drawImage(I.oilIcon, 960 - 140, 18, 44, 44); x.fillStyle = '#ffe3a8'; x.font = 'bold 28px monospace'; x.fillText(`${got}/${oils.length}`, 960 - 88, 50);
+  if (state === 'title' || won > 0) {
+    x.fillStyle = `rgba(8,12,28,${state === 'title' ? .55 : Math.min(.7, won)})`; x.fillRect(0, 0, 960, 540);
+    { const tw = 620, th = tw * I.title.height / I.title.width; x.drawImage(I.title, 480 - tw / 2, 230 - th / 2, tw, th); }
+    x.fillStyle = '#ffe3a8'; x.font = 'bold 24px monospace'; x.textAlign = 'center';
+    x.fillText(state === 'title' ? 'press any key / tap to start' : `the lamp is lit · ${got}/${oils.length} oil`, 480, 450); x.textAlign = 'left';
+  }
+}
+window.step = dt => { update(dt); draw(); };
+let last = performance.now();
+if (!DEMO) (function loop(now) { update(Math.min(.05, (now - last) / 1000)); last = now; draw(); requestAnimationFrame(loop); })(last);
+window.ready = Promise.all(Object.values(I).map(i => i.decode()));
+</script></body></html>
