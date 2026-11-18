@@ -5,7 +5,7 @@
 **说出你的游戏，拿到整套风格统一的游戏素材，外加一个能玩的原型。**
 
 角色精灵 · 地块 · UI 图标 · 视差背景 · 标题 Logo · 音乐 · 配音 · 预告片<br>
-一个计划文件，一个 [HiAPI](https://www.hiapi.ai/zh) Key，任何编程 Agent（Claude Code、Codex、Cursor……）都能用
+一个计划文件，一个 [HiAPI](https://www.hiapi.ai/zh?utm_source=github&utm_medium=readme&utm_campaign=hiapi-game-asset-studio) Key，任何编程 Agent（Claude Code、Codex、Cursor……）都能用
 
 [English](README.md) · 简体中文 · AI Agent？先读 [llms-install.md](llms-install.md)
 
@@ -27,7 +27,7 @@
 
 ```bash
 npx -y github:HiAPIAI/hiapi-game-asset-studio-skill -y
-export HIAPI_API_KEY=你的key        # https://www.hiapi.ai/zh/dashboard/api-keys
+export HIAPI_API_KEY=你的key        # https://www.hiapi.ai/zh/dashboard/api-keys?utm_source=github&utm_medium=readme&utm_campaign=hiapi-game-asset-studio
 ```
 
 然后对 Agent 说：

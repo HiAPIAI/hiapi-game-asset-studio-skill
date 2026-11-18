@@ -27,7 +27,7 @@
 | `voice` | voice | `longanlingxin` (default), `longanlufeng` |
 | `duration` | video | 4–15 s; `resolution` 480p or 720p; `audio` true/false |
 
-List prices used by `--dry-run` (check https://www.hiapi.ai/en/pricing): image $0.05 (1K) / $0.08 (2K) / $0.12 (4K),
+List prices used by `--dry-run` (check https://www.hiapi.ai/en/pricing?utm_source=skill&utm_medium=agent&utm_campaign=hiapi-game-asset-studio): image $0.05 (1K) / $0.08 (2K) / $0.12 (4K),
 background removal $0.002, music $0.21 per track, voice $0.04 per 1,000 characters, video $0.084/s (480p) or $0.177/s (720p).
 
 ## Prompting for consistency

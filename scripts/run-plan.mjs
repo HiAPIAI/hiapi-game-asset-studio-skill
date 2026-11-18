@@ -70,7 +70,7 @@ async function main() {
   if (f.only) { const need = new Set(), add = id => { if (need.has(id)) return; need.add(id); deps(byId[id]).forEach(add); }; String(f.only).split(',').forEach(add); want = want.filter(id => need.has(id)); }
   const todo = want.filter(id => !M.assets[id]);
   const total = todo.reduce((s, id) => s + cost(byId[id]), 0);
-  console.log(`${todo.length} to make, ${want.length - todo.length} already done · estimated cost $${total.toFixed(2)} (list prices; check https://www.hiapi.ai/en/pricing)`);
+  console.log(`${todo.length} to make, ${want.length - todo.length} already done · estimated cost $${total.toFixed(2)} (list prices; check https://www.hiapi.ai/en/pricing?utm_source=skill&utm_medium=agent&utm_campaign=hiapi-game-asset-studio)`);
   if (f['dry-run']) { for (const id of todo) { const a = byId[id], r = a.type === 'file' ? { model: '(local file ' + a.path + ')' } : deps(a).every(d => M.assets[d]) ? request(a, plan, M.assets, out) : { model: '(after ' + deps(a).join(', ') + ')' }; console.log(`- ${id} [${a.type}] $${cost(a).toFixed(3)} → ${r.model}`); } return; }
   const save = () => writeFileSync(mf, JSON.stringify(M, null, 1));
   const running = new Set(), failed = new Set(), conc = +(f.concurrency || 4);
