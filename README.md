@@ -5,7 +5,7 @@
 **Describe your game. Get the whole asset pack — in one style — and a playable prototype.**
 
 Sprites · tilesets · UI icons · parallax backgrounds · title logo · music · voice lines · trailer<br>
-one plan file, one [HiAPI](https://www.hiapi.ai/en) key, any coding agent (Claude Code, Codex, Cursor…)
+one plan file, one [HiAPI](https://www.hiapi.ai/en?utm_source=github&utm_medium=readme&utm_campaign=hiapi-game-asset-studio) key, any coding agent (Claude Code, Codex, Cursor…)
 
 English · [简体中文](README.zh-CN.md) · AI agent? Read [llms-install.md](llms-install.md)
 
@@ -27,7 +27,7 @@ English · [简体中文](README.zh-CN.md) · AI agent? Read [llms-install.md](l
 
 ```bash
 npx -y github:HiAPIAI/hiapi-game-asset-studio-skill -y
-export HIAPI_API_KEY=your_key        # https://www.hiapi.ai/en/dashboard/api-keys
+export HIAPI_API_KEY=your_key        # https://www.hiapi.ai/en/dashboard/api-keys?utm_source=github&utm_medium=readme&utm_campaign=hiapi-game-asset-studio
 ```
 
 Then ask your agent:
